@@ -55,6 +55,7 @@ class DefaultController extends AbstractController
             'date' => $score->getDate(),
             'score' => $score->getScore(),
         );
+
         return $this->json($resp,200, ['Access-Control-Allow-Origin' => '*']);
     }
 }
