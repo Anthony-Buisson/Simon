@@ -12,6 +12,7 @@ interface Score {
 
 function Leaderboard () {
     const [scores, setScores] = useState<Score[]>([]);
+    const {gameState} = useGame();
 
     async function fetch() {
         const { data } = await getScores();
@@ -20,7 +21,7 @@ function Leaderboard () {
 
     useEffect(()=> {
          fetch();
-    }, [])
+    }, [gameState])
 
     return (
         <table style={{border: '1px solid black', marginTop: '50px'}}>

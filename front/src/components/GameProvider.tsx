@@ -55,11 +55,6 @@ const Provider = ({ children }: { children: JSX.Element}) => {
     }, [gameState])
 
     function updateNextTile() {
-        addScore({
-            pseudo,
-            date: Date.now().toFixed(),
-            score: gameDuration
-        })
         const newTileIndex = nextTileIndex+1;
         if(newTileIndex > level && level < 4) {//next level
             setLevel(level+1);
