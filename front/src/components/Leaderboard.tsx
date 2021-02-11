@@ -24,20 +24,23 @@ function Leaderboard () {
     }, [gameState])
 
     return (
-        <table style={{border: '1px solid black', marginTop: '50px'}}>
-            <thead>
-                <th>Pseudo</th>
-                <th>Date</th>
-                <th>Score</th>
-            </thead>
-            {scores.map(score => (
-                <tr>
-                    <td>{score.pseudo}</td>
-                    <td>{new Date(score.date*1).toLocaleDateString()}</td>
-                    <td>{score.score} secondes</td>
-                </tr>
-            ))}
-        </table>
+        <div>
+            <h2>Tableau des scores</h2>
+            <table style={{border: '1px solid black', marginTop: '50px'}}>
+                <thead>
+                    <th>Pseudo</th>
+                    <th>Date</th>
+                    <th>Score</th>
+                </thead>
+                {scores.map(score => (
+                    <tr>
+                        <td>{score.pseudo}</td>
+                        <td>{new Date(score.date*1).toLocaleDateString()}</td>
+                        <td>{score.score} secondes</td>
+                    </tr>
+                ))}
+            </table>
+        </div>
     )
 }
 
