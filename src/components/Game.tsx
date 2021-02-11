@@ -3,6 +3,7 @@ import GamePad from "./GamePad";
 import useGame from "./GameProvider";
 import GameScreen from "./GameScreen";
 import GameMessage from "./GameMessage";
+import GameLevels from "./GameLevels";
 
 function Game () {
     const {gameState, gameDuration} = useGame();
@@ -10,7 +11,8 @@ function Game () {
     if(gameState === 'started') {
         content = (
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <h2 style={{textAlign: 'center'}}>Temps : {gameDuration} secondes</h2>
+                <h2 style={{textAlign: 'center'}}>Temps : {gameDuration} secondes</h2>
+                <GameLevels />
                 <div style={{display: 'flex'}}>
                     <GameScreen />
                     <GamePad />
