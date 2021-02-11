@@ -12,6 +12,8 @@ interface GameContextState {
     gameDuration: number;
     clickEnabled: boolean;
     setClickEnabled: (enabled: boolean) => void;
+    pseudo: string;
+    setPseudo: any;
 }
 
 const GameContext = createContext({} as GameContextState);
@@ -24,7 +26,8 @@ const Provider = ({ children }: { children: JSX.Element}) => {
     const [nextTileIndex, setNextTileIndex] = useState<number>(0);
     const [progression, setProgression] = useState<number>(0);
     const [gameDuration, setGameDuration] = useState<number>(0);
-    const [clickEnabled, setClickEnabled] = useState<boolean>(false)
+    const [clickEnabled, setClickEnabled] = useState<boolean>(false);
+    const [pseudo, setPseudo] = useState<string>('User');
 
     function generateSequence() {
         const newSequence = sequence.map((seq: number) => Math.floor(Math.random()*100 % 9));
@@ -81,7 +84,9 @@ const Provider = ({ children }: { children: JSX.Element}) => {
         resetGame,
         gameDuration,
         clickEnabled,
-        setClickEnabled
+        setClickEnabled,
+        pseudo,
+        setPseudo
     };
 
     return (

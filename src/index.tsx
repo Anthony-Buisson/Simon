@@ -4,7 +4,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Game from "./components/Game";
 import Leaderboard from "./components/Leaderboard";
-import {GameProvider} from "./components/GameProvider";
+import { GameProvider } from "./components/GameProvider";
 
 ReactDOM.render(
     <React.StrictMode>
