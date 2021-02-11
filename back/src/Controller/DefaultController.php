@@ -37,7 +37,6 @@ class DefaultController extends AbstractController
     /**
      * @Route("/scores", name="score_new", methods={"POST"})
      *
-     * @param ScoreRepository $scoreRepository
      * @param Request $request
      * @param EntityManagerInterface $em
      * @return JsonResponse
