@@ -1,24 +1,30 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface GameContextState {
-    isReady: boolean;
-    setIsReady: (ready: boolean) => void;
+    gameState: 'ready' | 'started' | 'finished' | 'failed';
+    setGameState: (state: 'ready' | 'started' | 'finished' | 'failed') => void;
     sequence: any;
     tileToClick: number | null;
     updateNextTile: () => void;
     level: number;
     progression: number;
+    resetGame: () => void;
+    gameDuration: number;
+    clickEnabled: boolean;
+    setClickEnabled: (enabled: boolean) => void;
 }
 
 const GameContext = createContext({} as GameContextState);
 
 const Provider = ({ children }: { children: JSX.Element}) => {
-    const [isReady, setIsReady] = useState(false);
+    const [gameState, setGameState] = useState<'ready' | 'started' | 'finished' | 'failed'>('ready');
     const [sequence, setSequence] = useState<any>(new Array(5).fill(0));
     const [level, setLevel] = useState<number>(0);
     const [tileToClick, setTileToClick] = useState<number|null>(null);
     const [nextTileIndex, setNextTileIndex] = useState<number>(0);
     const [progression, setProgression] = useState<number>(0);
+    const [gameDuration, setGameDuration] = useState<number>(0);
+    const [clickEnabled, setClickEnabled] = useState<boolean>(false)
 
     function generateSequence() {
         const newSequence = sequence.map((seq: number) => Math.floor(Math.random()*100 % 9));
@@ -32,6 +38,18 @@ const Provider = ({ children }: { children: JSX.Element}) => {
         generateSequence();
     }, [])
 
+    useEffect(()=>{
+        let interval: any;
+        if (gameState === 'started') {
+            interval = setInterval(()=>{
+                setGameDuration(duration => duration+1);
+            }, 1000);
+        } else if (gameState === "finished" || gameState === "failed") {
+            clearInterval(interval);
+        }
+        return ()=>clearInterval(interval);
+    }, [gameState])
+
     function updateNextTile() {
         const newTileIndex = nextTileIndex+1;
         if(newTileIndex > level && level < 4) {//next level
@@ -39,9 +57,7 @@ const Provider = ({ children }: { children: JSX.Element}) => {
             setTileToClick(sequence[0]);
             setNextTileIndex(0);
         } else if (newTileIndex > level) { //end of game
-            console.log('FIN DU GAME');
-            generateSequence();
-            setIsReady(false);
+            setGameState('finished');
         } else {
             setTileToClick(sequence[newTileIndex]);
             setNextTileIndex(newTileIndex)
@@ -49,14 +65,23 @@ const Provider = ({ children }: { children: JSX.Element}) => {
         setProgression(progression+1)
     }
 
+    function resetGame() {
+        generateSequence();
+        setGameState('started');
+    }
+
     const providerValues = {
-        isReady,
+        gameState,
         sequence,
-        setIsReady,
+        setGameState,
         tileToClick,
         level,
         updateNextTile,
-        progression
+        progression,
+        resetGame,
+        gameDuration,
+        clickEnabled,
+        setClickEnabled
     };
 
     return (

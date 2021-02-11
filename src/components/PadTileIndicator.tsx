@@ -3,7 +3,7 @@ import useGame from "./GameProvider";
 
 function PadTileIndicator (props: any) {
     const { value } = props;
-    const { level, sequence } = useGame();
+    const { level, sequence, setClickEnabled } = useGame();
     const [color, setColor] = useState<'blue' | 'black'>('black');
 
     function blink (delay: number) {
@@ -17,8 +17,15 @@ function PadTileIndicator (props: any) {
 
     useEffect(()=>{
         const currentSeq = [...sequence].splice(0, level+1);
+
         currentSeq.forEach((tile: number, index: number) => {
             if(tile === value) {
+                if(index === 0) {
+                    setClickEnabled(false)
+                }
+                if(index === currentSeq.length-1) {
+                    setTimeout(()=>setClickEnabled(true), index*600+500)
+                }
                 blink(index*600)
             }
         });

@@ -3,10 +3,13 @@ import useGame from "./GameProvider";
 
 function PadTile (props: any) {
     const { shouldClick, value } = props;
-    const { updateNextTile } = useGame();
+    const { updateNextTile, setGameState, clickEnabled } = useGame();
     const [color, setColor] = useState<'orange'| 'blue' | 'red'>('orange');
 
     function checkSequence () {
+        if(!clickEnabled) {
+            return;
+        }
         if(shouldClick) {
             setColor('blue');
             setTimeout(()=>{
@@ -17,6 +20,7 @@ function PadTile (props: any) {
             setColor('red')
             setTimeout(()=>{
                 setColor('orange')
+                setGameState('failed')
             }, 1000);
         }
     }

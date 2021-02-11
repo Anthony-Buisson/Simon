@@ -1,24 +1,29 @@
 import React from 'react';
-import Button from "./shared/Button";
 import GamePad from "./GamePad";
 import useGame from "./GameProvider";
 import GameScreen from "./GameScreen";
+import GameMessage from "./GameMessage";
 
 function Game () {
-    const {isReady, setIsReady} = useGame();
+    const {gameState, gameDuration} = useGame();
     let content;
-    if(isReady) {
+    if(gameState === 'started') {
         content = (
-            <div style={{display: 'flex'}}>
-                <GameScreen />
-                <GamePad />
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <h2 style={{textAlign: 'center'}}>Temps : {gameDuration} secondes</h2>
+                <div style={{display: 'flex'}}>
+                    <GameScreen />
+                    <GamePad />
+                </div>
             </div>
         )
     } else {
-        content = <Button text={'Start'} action={() => setIsReady(true)} buttonStyle={'primary'} />
+        content = (
+            <GameMessage />
+        )
     }
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             {content}
         </div>
     )
