@@ -1,19 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import useGame from "./GameProvider";
 import {chunk} from "../utils/sequence";
 import PadTile from "./PadTile";
+import {getScores} from "../api/wrapper";
+
+interface Score {
+    score: number;
+    date: number;
+    pseudo: string;
+}
 
 function Leaderboard () {
-    const { tileToClick, sequence } = useGame();
+    const [scores, setScores] = useState<Score[]>([]);
 
-    const pad = chunk(new Array(9).fill(0).map((a, i)=>i), 3);
+    async function fetch() {
+        const { data } = await getScores();
+        setScores(data.reverse());
+    }
+
+    useEffect(()=> {
+         fetch();
+    }, [])
 
     return (
-        <div>
-        <div>
-            SCORES
-        </div>
-        </div>
+        <table style={{border: '1px solid black', marginTop: '50px'}}>
+            <thead>
+                <th>Pseudo</th>
+                <th>Date</th>
+                <th>Score</th>
+            </thead>
+            {scores.map(score => (
+                <tr>
+                    <td>{score.pseudo}</td>
+                    <td>{new Date(score.date*1).toLocaleDateString()}</td>
+                    <td>{score.score} secondes</td>
+                </tr>
+            ))}
+        </table>
     )
 }
 

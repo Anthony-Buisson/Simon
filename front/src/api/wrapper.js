@@ -1,11 +1,10 @@
 import api from './api';
-import { BASE_URL } from "../env";
-const axios = require('axios');
+import { BASE_URL } from "./env";
 
-export async function login (email, password) {
-    return axios.post(BASE_URL+'/login', {email, password})
+export async function addScore (score) {
+    return api.post(BASE_URL+'/scores', score)
 }
 
-export function getArticles () {
-    return api.get(BASE_URL+'/articles')
+export async function getScores () {
+    return api.get(BASE_URL+'/scores')
 }

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import {addScore} from "../api/wrapper";
 
 interface GameContextState {
     gameState: 'ready' | 'started' | 'finished' | 'failed';
@@ -54,6 +55,11 @@ const Provider = ({ children }: { children: JSX.Element}) => {
     }, [gameState])
 
     function updateNextTile() {
+        addScore({
+            pseudo,
+            date: Date.now().toFixed(),
+            score: gameDuration
+        })
         const newTileIndex = nextTileIndex+1;
         if(newTileIndex > level && level < 4) {//next level
             setLevel(level+1);
@@ -61,6 +67,11 @@ const Provider = ({ children }: { children: JSX.Element}) => {
             setNextTileIndex(0);
         } else if (newTileIndex > level) { //end of game
             setGameState('finished');
+            addScore({
+                pseudo,
+                date: Date.now().toFixed(),
+                score: gameDuration
+            })
         } else {
             setTileToClick(sequence[newTileIndex]);
             setNextTileIndex(newTileIndex)

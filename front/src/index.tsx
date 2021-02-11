@@ -9,10 +9,10 @@ import { GameProvider } from "./components/GameProvider";
 ReactDOM.render(
     <React.StrictMode>
         <GameProvider>
-            <>
+            <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Game />
                 <Leaderboard />
-            </>
+            </div>
         </GameProvider>
     </React.StrictMode>,
     document.getElementById('root')

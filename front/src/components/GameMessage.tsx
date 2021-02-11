@@ -10,7 +10,7 @@ function GameMessage () {
         title: 'Jeu du simon',
         subTitle: `prêt à commencer ?`,
         pseudo: true,
-        button: 'Commencer'
+        button: 'Commencer',
     }
 
     const pseudoInput = (
@@ -25,7 +25,7 @@ function GameMessage () {
                 title: `Bien joué ${pseudo} !`,
                 subTitle: `Simon réussi en ${gameDuration} secondes.`,
                 pseudo: false,
-                button: 'Recommencer'
+                button: 'Recommencer',
             }
             break;
         case 'failed':
