@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container } from '../style/components/GameMessage.style';
 import useGame from "./GameProvider";
 import Button from "./shared/Button";
 
@@ -30,13 +31,13 @@ function GameMessage () {
             break;
     }
     return (
-        <div style={{display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
+        <Container>
             <h1>{messages.title}</h1>
             <h2>{messages.subTitle}</h2>
             <div>
                 <Button text={messages.button} action={resetGame} buttonStyle={'primary'} />
             </div>
-        </div>
+        </Container>
     )
 }
 
