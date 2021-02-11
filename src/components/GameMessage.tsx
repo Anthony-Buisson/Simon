@@ -10,7 +10,6 @@ function GameMessage () {
         subTitle: `prêt à commencer ?`,
         button: 'Commencer'
     }
-    console.log(messages)
 
     switch (gameState) {
         case 'finished':
